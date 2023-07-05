@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -40,5 +40,16 @@ public class PlayerController : MonoBehaviour
 #endif
 
         transform.Translate(transform.forward * speed * Time.deltaTime);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        other.TryGetComponent(out Obstacles obstacle);
+
+        if (!obstacle || obstacle.HasDisabledObstacles)
+            return;
+
+
+        Debug.LogError("GameOver");
     }
 }

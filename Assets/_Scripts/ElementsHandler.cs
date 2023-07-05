@@ -24,13 +24,28 @@ public class ElementsHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        CheckObstacles();
+
+        Debug.DrawRay(transform.position, transform.forward * 10, Color.green);
+    }
+
+    private void CheckObstacles()
+    {
         RaycastHit hit;
 
         if (Physics.Raycast(transform.position, transform.forward, out hit, 10f, obstaclesLayer))
         {
-            hit.transform.GetComponent<MeshRenderer>().enabled = true;
-        }
+            hit.transform.TryGetComponent(out Obstacles obstacle);
+            if (!obstacle)
+                return;
 
-        Debug.DrawRay(transform.position, transform.forward * 10, Color.green);
+            if (selectedElements != obstacle.ObstacleType)
+            {
+                return;
+            }
+
+            obstacle.DisableObstacles();
+
+        }
     }
 }
