@@ -21,30 +21,60 @@ public class PlayerController : MonoBehaviour
 
         float _newPosX = transform.position.x + Input.GetAxis("Horizontal") * 5 * Time.deltaTime;
 
-        //Mathf.Clamp(_newPosX, -2f, 2f);
+        Mathf.Clamp(_newPosX, -2f, 2f);
 
-        //if (_newPosX > 3.25f)
-        //{
-        //    _newPosX = 3.25f;
-        //}
+        if (_newPosX > 3.25f)
+        {
+            _newPosX = 3.25f;
+        }
 
-        //if (_newPosX < -3.25f)
-        //{
-        //    _newPosX = -3.25f;
-        //}
+        if (_newPosX < -3.25f)
+        {
+            _newPosX = -3.25f;
+        }
 
-        transform.position = new Vector3(_newPosX,
-            transform.position.y, transform.position.z);
-
+        transform.position = new Vector3(_newPosX, transform.position.y, transform.position.z);
 
 #endif
 
+
+
         transform.Translate(transform.forward * speed * Time.deltaTime);
+    }
+
+    void PlayerMovement()
+    {
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+
+            switch (touch.phase)
+            {
+                case TouchPhase.Moved:
+
+                    float _newPosX = transform.position.x + touch.deltaPosition.x * touchSpeed * Time.deltaTime;
+
+                    if (_newPosX > 3.25f)
+                    {
+                        _newPosX = 3.25f;
+                    }
+
+                    if (_newPosX < -3.25f)
+                    {
+                        _newPosX = -3.25f;
+                    }
+
+                    transform.position = new Vector3(_newPosX, transform.position.y, transform.position.z);
+
+                    break;
+            }
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
         other.TryGetComponent(out Obstacles obstacle);
+
 
         if (!obstacle || obstacle.HasDisabledObstacles)
             return;

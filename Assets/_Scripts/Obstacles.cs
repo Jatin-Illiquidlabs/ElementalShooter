@@ -1,13 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Obstacles : MonoBehaviour
 {
+    [Header("Obstacles")]
+    [SerializeField] private GameObject blockerObject;
+    [SerializeField] private GameObject clearPathObject;
+
+    [Header("Details")]
     [SerializeField] private ElementsTypes obstacleType;
     public ElementsTypes ObstacleType { get { return obstacleType; } }
 
     [SerializeField] private float destroyTime = 0f;
+    [SerializeField] private bool bCanUpdateMaterial = false;
+    [SerializeField] private string changeValueName;
+    [SerializeField] private ParticleSystem destroyFx;
+    [SerializeField] private Transform damagePoint;
+    public Transform DamagePoint { get { return damagePoint; } }
+
+    private float changeValue = -1;
+    private bool bStartChangingMaterial = false;
+
+    private Material materialToUpdate;
 
 
     private bool bHasDisabledObstacle = false;
@@ -22,11 +39,23 @@ public class Obstacles : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (bStartChangingMaterial)
+        {
+            changeValue += Time.deltaTime;
+
+            materialToUpdate.SetFloat("_"+changeValueName, changeValue);
+            
+        }
     }
 
     public void DisableObstacles()
     {
+        if (bCanUpdateMaterial)
+        {
+            materialToUpdate = clearPathObject.GetComponentInChildren<MeshRenderer>().material;
+            bStartChangingMaterial = true;
+        }
+
         Invoke(nameof(RemoveBlocker), destroyTime);
 
         ActivatePath();
@@ -34,14 +63,26 @@ public class Obstacles : MonoBehaviour
 
     private void RemoveBlocker()
     {
+        if (!blockerObject)
+            return;
 
+        blockerObject.SetActive(false);
     }
 
     private void ActivatePath()
     {
-        GetComponent<MeshRenderer>().enabled = true;
-
         bHasDisabledObstacle = true;
+
+        if (destroyFx != null)
+        {
+            //destroyFx.Play();
+            Destroy(destroyFx, 2f);
+        }
+
+        if (!clearPathObject)
+            return;
+
+        clearPathObject.SetActive(true);
     }
 
 }
