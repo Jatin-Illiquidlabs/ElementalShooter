@@ -4990,7 +4990,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blockerObject: {fileID: 4478249321913354357}
   clearPathObject: {fileID: 2230495396698975223}
-  obstacleType: 0
+  obstacleType: 1
   destroyTime: 0
   bCanUpdateMaterial: 1
   changeValueName: BurnValue

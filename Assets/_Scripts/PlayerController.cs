@@ -7,10 +7,14 @@ public class PlayerController : MonoBehaviour
     [Header("Player Movement")]
     [SerializeField] private float speed = 5f;
     [SerializeField] private float touchSpeed = 5f;
+    [SerializeField] private float maxX = 5;
+    [SerializeField] private float minX = -5;
 
     [SerializeField] private ElementsHandler elementHandler;
 
     private bool bIsGameover = false;
+
+    private int gemsCollected = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -28,16 +32,16 @@ public class PlayerController : MonoBehaviour
 
         float _newPosX = transform.position.x + Input.GetAxis("Horizontal") * 5 * Time.deltaTime;
 
-        Mathf.Clamp(_newPosX, -2f, 2f);
+        //Mathf.Clamp(_newPosX, -2f, 2f);
 
-        if (_newPosX > 3.25f)
+        if (_newPosX > maxX)
         {
-            _newPosX = 3.25f;
+            _newPosX = maxX;
         }
 
-        if (_newPosX < -3.25f)
+        if (_newPosX < minX)
         {
-            _newPosX = -3.25f;
+            _newPosX = minX;
         }
 
         transform.position = new Vector3(_newPosX, transform.position.y, transform.position.z);
@@ -87,7 +91,11 @@ public class PlayerController : MonoBehaviour
             elementHandler.UpdateElement(portal.ElementsType);
         }
 
-
+        if (other.CompareTag("Collectible"))
+        {
+            gemsCollected += 1;
+            Destroy(other.gameObject);
+        }
 
         other.TryGetComponent(out Obstacles obstacle);
 
