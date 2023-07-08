@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -13,13 +15,20 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private ElementsHandler elementHandler;
 
     private bool bIsGameover = false;
+    private bool bLevelCompelete = false;
+    [SerializeField] private GameObject gameOverUI;
+    [SerializeField] private TMP_Text gemsText;
+
 
     private int gemsCollected = 0;
+    [SerializeField] private AudioClip gemsAudio;
+    [SerializeField] private AudioSource gemsAudioSource;
 
     // Start is called before the first frame update
     void Start()
     {
         bIsGameover = false;
+        bLevelCompelete = true;
     }
 
     // Update is called once per frame
@@ -94,7 +103,13 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("Collectible"))
         {
             gemsCollected += 1;
+            gemsAudioSource.PlayOneShot(gemsAudio);
             Destroy(other.gameObject);
+        }
+
+        if (other.CompareTag("Finish"))
+        {
+            bLevelCompelete = true;
         }
 
         other.TryGetComponent(out Obstacles obstacle);
@@ -103,9 +118,19 @@ public class PlayerController : MonoBehaviour
         if (!obstacle || obstacle.HasDisabledObstacles)
             return;
 
+        if (bLevelCompelete)
+        {
+            gemsText.text = gemsCollected.ToString();
+            gameOverUI.SetActive(true);
+        }
 
         Debug.LogError("GameOver");
 
         bIsGameover = true;
+    }
+
+    public void RestartLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
