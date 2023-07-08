@@ -3,7 +3,17 @@ guid: f39af07a8cccac14fa838cc4057a0262
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bullets
+    second: {fileID: 2100000, guid: 14fc77d7bfa1a9948967609ae83760c2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Cyber Gun
+    second: {fileID: 2100000, guid: d5f2e53af9aa4d44cac44d2de93116c6, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

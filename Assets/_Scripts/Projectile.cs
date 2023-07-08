@@ -6,6 +6,7 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     [SerializeField] private ElementsTypes projectileType;
+    public ElementsTypes ProjectileType { get { return projectileType; } }  
     [SerializeField] private ParticleSystem destroyFx;
     [SerializeField] private float speed = 5;
 

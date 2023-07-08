@@ -7,15 +7,16 @@ public enum ElementsTypes
     Ice,
     Fire,
     Pulse,
-    Electric
+    Lightning
 }
 
 public class ElementsHandler : MonoBehaviour
 {
-    [SerializeField] private ElementsTypes selectedElements;
+    [SerializeField] private ElementsTypes selectedElement;
     [SerializeField] private LayerMask obstaclesLayer;
 
-    [SerializeField] private Projectile projectile;
+    [SerializeField] private Projectile[] projectilesList;
+    [SerializeField] private int currentProjectileIndex;
     [SerializeField] private Transform attackPoint;
 
     // Start is called before the first frame update
@@ -27,36 +28,35 @@ public class ElementsHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CheckObstacles();
 
-        Debug.DrawRay(transform.position, transform.forward * 5, Color.green);
     }
 
 
     public void FireProjectile()
     {
-        Projectile spawnedProjectile = Instantiate(projectile, attackPoint.position, Quaternion.identity);
+        Projectile spawnedProjectile = Instantiate(projectilesList[currentProjectileIndex], attackPoint.position, Quaternion.identity);
         spawnedProjectile.SpawnProjectile();
     }
 
-    private void CheckObstacles()
+
+    public void UpdateElement(ElementsTypes _newElement)
     {
-        RaycastHit hit;
+        selectedElement = _newElement;
 
-        if (Physics.Raycast(transform.position, transform.forward, out hit, 5f, obstaclesLayer))
+        switch(_newElement)
         {
-            //hit.transform.TryGetComponent(out Obstacles obstacle);
-            //if (!obstacle)
-            //    return;
+            case ElementsTypes.Ice:
+                currentProjectileIndex = 0;
+                break;
 
-            //if (selectedElements != obstacle.ObstacleType)
-            //{
-            //    return;
-            //}
+            case ElementsTypes.Fire:
+                currentProjectileIndex = 1;
+                break;
 
-            //obstacle.DisableObstacles();
-
+            case ElementsTypes.Lightning:
+                currentProjectileIndex = 2;
+                break;
         }
-    }
 
+    }
 }

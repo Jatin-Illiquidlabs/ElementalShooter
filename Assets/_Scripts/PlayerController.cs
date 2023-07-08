@@ -8,15 +8,22 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float speed = 5f;
     [SerializeField] private float touchSpeed = 5f;
 
+    [SerializeField] private ElementsHandler elementHandler;
+
+    private bool bIsGameover = false;
+
     // Start is called before the first frame update
     void Start()
     {
-
+        bIsGameover = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (bIsGameover)
+            return;
+
 #if UNITY_EDITOR
 
         float _newPosX = transform.position.x + Input.GetAxis("Horizontal") * 5 * Time.deltaTime;
@@ -38,7 +45,7 @@ public class PlayerController : MonoBehaviour
 #endif
 
 
-
+        PlayerMovement();
         transform.Translate(transform.forward * speed * Time.deltaTime);
     }
 
@@ -73,6 +80,15 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        other.TryGetComponent(out Portal portal);
+
+        if (portal != null)
+        {
+            elementHandler.UpdateElement(portal.ElementsType);
+        }
+
+
+
         other.TryGetComponent(out Obstacles obstacle);
 
 
@@ -81,5 +97,7 @@ public class PlayerController : MonoBehaviour
 
 
         Debug.LogError("GameOver");
+
+        bIsGameover = true;
     }
 }
