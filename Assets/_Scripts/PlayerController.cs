@@ -8,17 +8,15 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Player Movement")]
     [SerializeField] private float speed = 5f;
-    [SerializeField] private float touchSpeed = 5f;
+    [SerializeField] private float touchSpeed = 3f;
     [SerializeField] private float maxX = 5;
     [SerializeField] private float minX = -5;
+    private bool bIsMoving = false;
 
     [SerializeField] private ElementsHandler elementHandler;
 
     private bool bIsGameover = false;
     private bool bLevelCompelete = false;
-    [SerializeField] private GameObject gameOverUI;
-    [SerializeField] private TMP_Text gemsText;
-
 
     private int gemsCollected = 0;
     [SerializeField] private AudioClip gemsAudio;
@@ -28,7 +26,8 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         bIsGameover = false;
-        bLevelCompelete = true;
+        bLevelCompelete = false;
+        bIsMoving = false;
     }
 
     // Update is called once per frame
@@ -38,6 +37,17 @@ public class PlayerController : MonoBehaviour
             return;
 
 #if UNITY_EDITOR
+
+        if (Input.GetKey(KeyCode.W))
+        {
+            bIsMoving = true;
+            elementHandler.CanAttack(true);
+        }
+        else
+        {
+            bIsMoving = false;
+            elementHandler.CanAttack(false);
+        }
 
         float _newPosX = transform.position.x + Input.GetAxis("Horizontal") * 5 * Time.deltaTime;
 
@@ -59,7 +69,9 @@ public class PlayerController : MonoBehaviour
 
 
         PlayerMovement();
-        transform.Translate(transform.forward * speed * Time.deltaTime);
+
+        if(bIsMoving) 
+            transform.Translate(transform.forward * speed * Time.deltaTime);
     }
 
     void PlayerMovement()
@@ -70,22 +82,32 @@ public class PlayerController : MonoBehaviour
 
             switch (touch.phase)
             {
+                case TouchPhase.Began:
+                    bIsMoving = true;
+                    elementHandler.CanAttack(true);
+                    break;
+
                 case TouchPhase.Moved:
 
                     float _newPosX = transform.position.x + touch.deltaPosition.x * touchSpeed * Time.deltaTime;
 
-                    if (_newPosX > 3.25f)
+                    if (_newPosX > maxX)
                     {
-                        _newPosX = 3.25f;
+                        _newPosX = maxX;
                     }
 
-                    if (_newPosX < -3.25f)
+                    if (_newPosX < minX)
                     {
-                        _newPosX = -3.25f;
+                        _newPosX = minX;
                     }
 
                     transform.position = new Vector3(_newPosX, transform.position.y, transform.position.z);
 
+                    break;
+
+                case TouchPhase.Ended:
+                    bIsMoving = false;
+                    elementHandler.CanAttack(false);
                     break;
             }
         }
@@ -98,12 +120,14 @@ public class PlayerController : MonoBehaviour
         if (portal != null)
         {
             elementHandler.UpdateElement(portal.ElementsType);
-        }
 
+            Destroy(portal.gameObject);
+        }
+         
         if (other.CompareTag("Collectible"))
         {
             gemsCollected += 1;
-            gemsAudioSource.PlayOneShot(gemsAudio);
+            EventsManager.Instance.PickupCoin(gemsCollected);
             Destroy(other.gameObject);
         }
 
@@ -118,11 +142,7 @@ public class PlayerController : MonoBehaviour
         if (!obstacle || obstacle.HasDisabledObstacles)
             return;
 
-        if (bLevelCompelete)
-        {
-            gemsText.text = gemsCollected.ToString();
-            gameOverUI.SetActive(true);
-        }
+        EventsManager.Instance.GameOver(bLevelCompelete);
 
         Debug.LogError("GameOver");
 

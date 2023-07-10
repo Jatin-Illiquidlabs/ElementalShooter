@@ -8,6 +8,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 133696725127109884, guid: 2295c8f1721abdb4db81efcef95e997d,
+        type: 3}
+      propertyPath: m_text
+      value: Ice
+      objectReference: {fileID: 0}
     - target: {fileID: 404189647777635673, guid: 2295c8f1721abdb4db81efcef95e997d,
         type: 3}
       propertyPath: m_Sprite
@@ -69,9 +74,39 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1698247045806360519, guid: 2295c8f1721abdb4db81efcef95e997d,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1698247045806360519, guid: 2295c8f1721abdb4db81efcef95e997d,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.87739563
+      objectReference: {fileID: 0}
+    - target: {fileID: 1698247045806360519, guid: 2295c8f1721abdb4db81efcef95e997d,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0.43867922
+      objectReference: {fileID: 0}
     - target: {fileID: 4447521749786722169, guid: 2295c8f1721abdb4db81efcef95e997d,
         type: 3}
       propertyPath: elementsType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4987456044210871537, guid: 2295c8f1721abdb4db81efcef95e997d,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4987456044210871537, guid: 2295c8f1721abdb4db81efcef95e997d,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.64177275
+      objectReference: {fileID: 0}
+    - target: {fileID: 4987456044210871537, guid: 2295c8f1721abdb4db81efcef95e997d,
+        type: 3}
+      propertyPath: m_Color.r
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7094789637347755596, guid: 2295c8f1721abdb4db81efcef95e997d,
@@ -80,6 +115,16 @@ PrefabInstance:
       value: Portal_Ice Variant
       objectReference: {fileID: 0}
     - target: {fileID: 7766075943454660536, guid: 2295c8f1721abdb4db81efcef95e997d,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: cbb7e13215f36484f9b493bb25de4d95, type: 2}
+    - target: {fileID: 8209442358359638763, guid: 2295c8f1721abdb4db81efcef95e997d,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 4b8fa2da80595484b8aa1109d0d81872, type: 2}
+    - target: {fileID: 9207928546998384298, guid: 2295c8f1721abdb4db81efcef95e997d,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
