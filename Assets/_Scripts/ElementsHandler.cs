@@ -16,10 +16,12 @@ public class ElementsHandler : MonoBehaviour
 
     [SerializeField] private Projectile[] projectilesList;
     [SerializeField] private int currentProjectileIndex;
-    [SerializeField] private Transform attackPoint;
+    [SerializeField] private Transform[] attackPoint;
 
     [Tooltip("Number of seconds it takes for next attack")]
-    [SerializeField] private float AttackSpeed = 3f;
+    [SerializeField] private float attackSpeed = 3f;
+    [SerializeField] private int bulletsCount = 1;
+    [SerializeField] private int bulletsMultipliers = 1;
     private float lastAttack = 0f;
     private bool bCanAttack = false;
 
@@ -39,9 +41,16 @@ public class ElementsHandler : MonoBehaviour
 
         lastAttack += Time.deltaTime;
 
-        if (lastAttack >= AttackSpeed)
+        if (lastAttack >= attackSpeed)
         {
             FireProjectile();
+
+            for (int i = 0; i < bulletsMultipliers - 1; i++)
+            {
+                float waitTime = ((float)(i + 1) )/ 4;
+                Invoke(nameof(FireProjectile), waitTime);
+            }
+
             lastAttack = 0;
         }
     }
@@ -53,8 +62,11 @@ public class ElementsHandler : MonoBehaviour
 
     public void FireProjectile()
     {
-        Projectile spawnedProjectile = Instantiate(projectilesList[currentProjectileIndex], attackPoint.position, Quaternion.identity);
-        spawnedProjectile.SpawnProjectile();
+        for (int i = 0; i < bulletsCount; i++)
+        {
+            Projectile spawnedProjectile = Instantiate(projectilesList[currentProjectileIndex], attackPoint[i].position, Quaternion.identity);
+            spawnedProjectile.SpawnProjectile();
+        }
     }
 
 

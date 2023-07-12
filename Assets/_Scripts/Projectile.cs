@@ -35,6 +35,7 @@ public class Projectile : MonoBehaviour
 
         if (projectileType != obstacle.ObstacleType)
         {
+            Destroy(gameObject);
             return;
         }
 

@@ -16,9 +16,11 @@ public class Obstacles : MonoBehaviour
 
     [SerializeField] private float destroyTime = 0f;
     [SerializeField] private bool bCanUpdateMaterial = false;
+    [SerializeField] private bool bIsMoving = false;
     [SerializeField] private string changeValueName;
     [SerializeField] private ParticleSystem destroyFx;
     [SerializeField] private Transform damagePoint;
+    [SerializeField] private Animator animator;
     public Transform DamagePoint { get { return damagePoint; } }
 
     private float changeValue = -1;
@@ -54,6 +56,12 @@ public class Obstacles : MonoBehaviour
         {
             materialToUpdate = clearPathObject.GetComponentInChildren<MeshRenderer>().material;
             bStartChangingMaterial = true;
+        }
+
+        if (bIsMoving && animator != null)
+        {
+            animator.StopPlayback();
+            animator.enabled = false;
         }
 
         Invoke(nameof(RemoveBlocker), destroyTime);

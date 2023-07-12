@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
@@ -48,5 +49,11 @@ public class MenuManager : MonoBehaviour
         }
 
         gameOverPanel.SetActive(true);
+    }
+
+
+    public void OnClick_RestartLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

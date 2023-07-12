@@ -155,9 +155,4 @@ public class PlayerController : MonoBehaviour
 
         bIsGameover = true;
     }
-
-    public void RestartLevel()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
 }
