@@ -1351,6 +1351,7 @@ MonoBehaviour:
   maxX: 5
   minX: -4.5
   elementHandler: {fileID: 167911276}
+  animator: {fileID: 167911277}
   gemsAudio: {fileID: 8300000, guid: 2eb3dadce8177471996f94d099823504, type: 3}
   gemsAudioSource: {fileID: 167911278}
 --- !u!114 &167911276
@@ -1371,7 +1372,7 @@ MonoBehaviour:
   - {fileID: 5986102577954862926, guid: 4d46d50bad05f974fb424fbc62fbfe0b, type: 3}
   currentProjectileIndex: 0
   attackPoint: {fileID: 10389001}
-  AttackSpeed: 3
+  AttackSpeed: 1
 --- !u!95 &167911277
 Animator:
   serializedVersion: 5
@@ -1510,7 +1511,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 7fc63c67ad4e184469ceefc5c53878f4,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1
+      value: -0.85
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7fc63c67ad4e184469ceefc5c53878f4,
         type: 3}
@@ -19234,6 +19235,7 @@ MonoBehaviour:
   maxX: 5
   minX: -5
   elementHandler: {fileID: 2123134852}
+  animator: {fileID: 0}
   gemsAudio: {fileID: 0}
   gemsAudioSource: {fileID: 0}
 --- !u!114 &2123134852

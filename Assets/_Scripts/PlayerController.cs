@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     private bool bIsMoving = false;
 
     [SerializeField] private ElementsHandler elementHandler;
+    [SerializeField] private Animator animator;
 
     private bool bIsGameover = false;
     private bool bLevelCompelete = false;
@@ -28,6 +29,8 @@ public class PlayerController : MonoBehaviour
         bIsGameover = false;
         bLevelCompelete = false;
         bIsMoving = false;
+
+        animator.SetBool("IsMoving", false);
     }
 
     // Update is called once per frame
@@ -42,11 +45,13 @@ public class PlayerController : MonoBehaviour
         {
             bIsMoving = true;
             elementHandler.CanAttack(true);
+            animator.SetBool("IsMoving", true);
         }
         else
         {
             bIsMoving = false;
             elementHandler.CanAttack(false);
+            animator.SetBool("IsMoving", false);
         }
 
         float _newPosX = transform.position.x + Input.GetAxis("Horizontal") * 5 * Time.deltaTime;
@@ -85,6 +90,7 @@ public class PlayerController : MonoBehaviour
                 case TouchPhase.Began:
                     bIsMoving = true;
                     elementHandler.CanAttack(true);
+                    animator.SetBool("IsMoving", true);
                     break;
 
                 case TouchPhase.Moved:
@@ -108,6 +114,7 @@ public class PlayerController : MonoBehaviour
                 case TouchPhase.Ended:
                     bIsMoving = false;
                     elementHandler.CanAttack(false);
+                    animator.SetBool("IsMoving", false);
                     break;
             }
         }
