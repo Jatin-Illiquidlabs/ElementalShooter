@@ -41,7 +41,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1235616814785086959}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Obstacle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -99,7 +99,7 @@ Transform:
   - {fileID: 1235616814785086959}
   - {fileID: 8949708355016588167}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &6991234149448011392
 Rigidbody:
@@ -166,9 +166,11 @@ MonoBehaviour:
   obstacleType: 0
   destroyTime: 0
   bCanUpdateMaterial: 0
+  bIsMoving: 0
   changeValueName: 
   destroyFx: {fileID: 0}
   damagePoint: {fileID: 0}
+  animator: {fileID: 0}
 --- !u!1001 &3635235251220152127
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -265,6 +267,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PoisonGas_VFX
+      objectReference: {fileID: 0}
+    - target: {fileID: 3641240008819602126, guid: 83a9f6ee33fc22445810af6676a31a2c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7970704203179013645, guid: 83a9f6ee33fc22445810af6676a31a2c,
         type: 3}
@@ -485,10 +492,19 @@ PrefabInstance:
       propertyPath: m_Name
       value: pipe (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 29f9554ff212f5348b0308a5a111a9b6,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 29f9554ff212f5348b0308a5a111a9b6,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2000086684555526230}
   m_SourcePrefab: {fileID: 100100000, guid: 29f9554ff212f5348b0308a5a111a9b6, type: 3}
 --- !u!4 &6943992704257055360 stripped
 Transform:
@@ -496,3 +512,30 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 7481813717891956075}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &7716306900506443834 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 29f9554ff212f5348b0308a5a111a9b6,
+    type: 3}
+  m_PrefabInstance: {fileID: 7481813717891956075}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &2000086684555526230
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7716306900506443834}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.19, y: 0.0068997648, z: 0.016118277}
+  m_Center: {x: -0.00068303815, y: 1.12068854e-10, z: -0.002202482}

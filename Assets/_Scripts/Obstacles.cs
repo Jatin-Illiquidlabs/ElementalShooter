@@ -43,7 +43,7 @@ public class Obstacles : MonoBehaviour
     {
         if (bStartChangingMaterial)
         {
-            changeValue += Time.deltaTime;
+            changeValue += Time.deltaTime * 2;
 
             materialToUpdate.SetFloat("_"+changeValueName, changeValue);
             

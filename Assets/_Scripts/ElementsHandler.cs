@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public enum ElementsTypes
@@ -12,11 +13,12 @@ public enum ElementsTypes
 
 public class ElementsHandler : MonoBehaviour
 {
-    [SerializeField] private ElementsTypes selectedElement;
+    [SerializeField] private List<ElementsTypes> selectedElement;
 
     [SerializeField] private Projectile[] projectilesList;
     [SerializeField] private int currentProjectileIndex;
     [SerializeField] private Transform[] attackPoint;
+    [SerializeField] private LayerMask obstaclesLayer;
 
     [Tooltip("Number of seconds it takes for next attack")]
     [SerializeField] private float attackSpeed = 3f;
@@ -39,6 +41,9 @@ public class ElementsHandler : MonoBehaviour
         if (!bCanAttack)
             return;
 
+        CheckObstacles();
+        Debug.DrawRay(transform.position, transform.forward * 5, Color.green);
+
         lastAttack += Time.deltaTime;
 
         if (lastAttack >= attackSpeed)
@@ -52,6 +57,21 @@ public class ElementsHandler : MonoBehaviour
             }
 
             lastAttack = 0;
+        }
+    }
+
+    private void CheckObstacles()
+    {
+        RaycastHit hit;
+
+        if (Physics.Raycast(transform.position, transform.forward, out hit, 5f, obstaclesLayer))
+        {
+            hit.transform.TryGetComponent(out Obstacles obstacle);
+
+            if (!obstacle)
+                return;
+
+            UpdateElement(obstacle.ObstacleType);
         }
     }
 
@@ -70,9 +90,12 @@ public class ElementsHandler : MonoBehaviour
     }
 
 
-    public void UpdateElement(ElementsTypes _newElement)
+    private void UpdateElement(ElementsTypes _newElement)
     {
-        selectedElement = _newElement;
+        //selectedElement = _newElement;
+
+        if (!selectedElement.Contains(_newElement))
+            return;
 
         switch(_newElement)
         {
@@ -89,5 +112,10 @@ public class ElementsHandler : MonoBehaviour
                 break;
         }
 
+    }
+
+    public void AddElement(ElementsTypes _newElement)
+    {
+        selectedElement.Add(_newElement);
     }
 }

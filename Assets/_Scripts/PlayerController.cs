@@ -126,8 +126,8 @@ public class PlayerController : MonoBehaviour
 
         if (portal != null)
         {
-            elementHandler.UpdateElement(portal.ElementsType);
-
+            //elementHandler.UpdateElement(portal.ElementsType);
+            elementHandler.AddElement(portal.ElementsType);
             Destroy(portal.gameObject);
         }
          
